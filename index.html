@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorldPop | Live World Population Counter</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+  body{background:#0a0f1e;color:white;transition:.3s}
+  body.light{background:#f8fafc;color:#0a0f1e}
+  body.light .card{background:#fff;border-color:#e2e8f0;color:#0a0f1e}
+  body.light header{background:white;color:#0a0f1e}
+  body.light nav a{color:#64748b} body.light nav a.active{color:#0a0f1e}
+  body.light .section p{color:#64748b}
+  body.light .hero p.sub{color:#475569}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;background:#0a0f1e;position:sticky;top:0;z-index:20;transition:.3s}
+  .logo{font-size:24px;font-weight:800} .logo span{color:#00e676}
+  .header-right{display:flex;align-items:center;gap:15px}
+  nav a{color:#cbd5e1;text-decoration:none;margin-left:20px;font-size:14px}
+  nav a.active{color:white}
+  #themeBtn{background:#1e293b;color:white;border:1px solid #334155;padding:9px 14px;border-radius:50px;cursor:pointer;font-size:15px}
+  body.light #themeBtn{background:#0f172a;color:white}
+
+  /* ===== HERO WITH WATERMARK ===== */
+  .hero{position:relative;text-align:center;padding:60px 20px 40px;overflow:hidden;isolation:isolate}
+  /* Watermark layer - 3 beautiful places */
+  .watermark{position:absolute;inset:0;z-index:-1;display:flex;opacity:.22;filter:grayscale(20%)}
+  .watermark div{flex:1;background-size:cover;background-position:center;position:relative}
+  .watermark div:nth-child(1){background-image:url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&q=80')}
+  .watermark div:nth-child(2){background-image:url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80')}
+  .watermark div:nth-child(3){background-image:url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&q=80')}
+  /* Dark overlay so text is readable */
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,30,.75),rgba(18,42,92,.85));z-index:-1}
+  body.light .hero::after{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(219,234,254,.88))}
+  body.light .watermark{opacity:.28}
+
+  .hero h1{font-size:42px;line-height:1.1;text-shadow:0 2px 20
