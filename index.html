@@ -6,33 +6,79 @@
 <title>WorldPop | Live World Population Counter</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-  body{background:#0a0f1e;color:white;transition:.3s}
+  body{background:#0a0f1e;color:white}
   body.light{background:#f8fafc;color:#0a0f1e}
-  body.light .card{background:#fff;border-color:#e2e8f0;color:#0a0f1e}
+  header{display:flex;justify-content:space-between;align-items:center;padding:18px 5%;background:#0a0f1e;position:sticky;top:0;z-index:10}
   body.light header{background:white;color:#0a0f1e}
-  body.light nav a{color:#64748b} body.light nav a.active{color:#0a0f1e}
-  body.light .section p{color:#64748b}
-  body.light .hero p.sub{color:#475569}
-
-  header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;background:#0a0f1e;position:sticky;top:0;z-index:20;transition:.3s}
   .logo{font-size:24px;font-weight:800} .logo span{color:#00e676}
-  .header-right{display:flex;align-items:center;gap:15px}
-  nav a{color:#cbd5e1;text-decoration:none;margin-left:20px;font-size:14px}
-  nav a.active{color:white}
-  #themeBtn{background:#1e293b;color:white;border:1px solid #334155;padding:9px 14px;border-radius:50px;cursor:pointer;font-size:15px}
-  body.light #themeBtn{background:#0f172a;color:white}
+  #themeBtn{background:#1e293b;color:white;border:1px solid #334155;padding:9px 14px;border-radius:50px;cursor:pointer}
+  /* HERO - WATERMARK AS BACKGROUND, SIMPLE WAY */
+  .hero{text-align:center;padding:50px 20px;
+    background-image:linear-gradient(rgba(10,15,30,.82),rgba(18,42,92,.88)), url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=80');
+    background-size:cover;background-position:center}
+  body.light .hero{background-image:linear-gradient(rgba(255,255,255,.85),rgba(219,234,254,.9)), url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=80')}
+  .hero h1{font-size:36px;line-height:1.1} .hero h1 span{color:#00e676}
+  .hero p{color:#cbd5e1;margin:12px auto;max-width:600px}
+  .tag{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:20px;font-size:12px;margin:5px}
+  .box{background:white;color:#0a0f1e;max-width:800px;margin:25px auto;padding:25px;border-radius:20px}
+  #population{font-size:44px;font-weight:900}
+  .live{background:#dcfce7;color:#166534;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700}
+  .stats{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  .stat{background:#f1f5f9;padding:12px 18px;border-radius:12px}
+  .stat b{font-size:20px;display:block}
+  .section{padding:40px 5%;max-width:1100px;margin:auto}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:20px}
+  .card{background:#111a33;padding:18px;border-radius:14px;border:1px solid #1e293b}
+  body.light .card{background:white;border-color:#e2e8f0}
+  .calc{background:white;color:#0a0f1e;border-radius:20px;padding:25px}
+  input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;margin-top:8px}
+  button.calc-btn{background:#00c853;color:white;border:none;padding:13px;border-radius:10px;font-weight:700;width:100%;margin-top:12px}
+  footer{text-align:center;padding:25px;color:#64748b;font-size:13px}
+</style>
+</head>
+<body>
+<header><div class="logo">World<span>Pop</span></div><button id="themeBtn" onclick="toggleTheme()">🌙 Dark</button></header>
 
-  /* ===== HERO WITH WATERMARK ===== */
-  .hero{position:relative;text-align:center;padding:60px 20px 40px;overflow:hidden;isolation:isolate}
-  /* Watermark layer - 3 beautiful places */
-  .watermark{position:absolute;inset:0;z-index:-1;display:flex;opacity:.22;filter:grayscale(20%)}
-  .watermark div{flex:1;background-size:cover;background-position:center;position:relative}
-  .watermark div:nth-child(1){background-image:url('https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&q=80')}
-  .watermark div:nth-child(2){background-image:url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80')}
-  .watermark div:nth-child(3){background-image:url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&q=80')}
-  /* Dark overlay so text is readable */
-  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,30,.75),rgba(18,42,92,.85));z-index:-1}
-  body.light .hero::after{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(219,234,254,.88))}
-  body.light .watermark{opacity:.28}
+<div class="hero">
+  <p>🌍 LIVE ESTIMATE</p>
+  <h1>How many people<br>are on Earth <span>right now?</span></h1>
+  <p>Based on UN data. Every second, ~4 babies are born and ~2 people die.</p>
+  <div><span class="tag">🇬🇷 Santorini</span><span class="tag">🏝️ Maldives</span><span class="tag">🏔️ Banff</span></div>
+  <div class="box">
+    <div style="font-size:12px;letter-spacing:2px;color:#64748b">CURRENT WORLD POPULATION</div>
+    <div id="population">8,240,000,000</div>
+    <span class="live">● LIVE</span>
+    <div class="stats">
+      <div class="stat"><b id="born">0</b><span>Births Today</span></div>
+      <div class="stat"><b id="died">0</b><span>Deaths Today</span></div>
+      <div class="stat"><b>+140 / min</b><span>Net Growth</span></div>
+    </div>
+  </div>
+  <p style="font-size:12px">Watermark: Maldives - One of the World's Most Beautiful Places</p>
+</div>
 
-  .hero h1{font-size:42px;line-height:1.1;text-shadow:0 2px 20
+<div class="section"><h2>Population by Region</h2><div class="grid">
+<div class="card"><h3>🌏 Asia</h3><p><b>4.8 Billion</b> • 59%</p></div>
+<div class="card"><h3>🌍 Africa</h3><p><b>1.5 Billion</b> • 18%</p></div>
+<div class="card"><h3>🌎 Europe</h3><p><b>745 Million</b> • 9%</p></div>
+<div class="card"><h3>🌎 North America</h3><p><b>380 Million</b> • 5%</p></div>
+<div class="card"><h3>🌎 South America</h3><p><b>435 Million</b> • 5%</p></div>
+<div class="card"><h3>🌏 Oceania</h3><p><b>44 Million</b> • 1%</p></div>
+</div></div>
+
+<div class="section"><h2>Future Calculator</h2><div class="calc">
+<label>Select Year</label><select id="year"><option>2030</option><option>2040</option><option selected>2050</option><option>2070</option><option>2100</option></select>
+<label>Growth %</label><input id="rate" value="0.85">
+<button class="calc-btn" onclick="calculate()">Calculate →</button>
+<p style="text-align:center;margin-top:15px">In <b id="yearLabel">2050</b>: <b id="futurePop" style="font-size:28px">9,700,000,000</b></p>
+</div></div>
+<footer>WorldPop • UN Data • Photos: Unsplash</footer>
+<script>
+function toggleTheme(){document.body.classList.toggle('light');document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️ Light':'🌙 Dark';}
+let pop=8240000000, start=Date.now();
+function fmt(n){return Math.floor(n).toLocaleString('en-US')}
+setInterval(()=>{let e=(Date.now()-start)/1000;document.getElementById('population').textContent=fmt(pop+e*2.3);document.getElementById('born').textContent=fmt(e*4.2);document.getElementById('died').textContent=fmt(e*1.9)},500);
+function calculate(){let y=parseInt(document.getElementById('year').value),r=parseFloat(document.getElementById('rate').value)/100;let f=8240000000*Math.pow(1+r,y-2026);document.getElementById('yearLabel').textContent=y;document.getElementById('futurePop').textContent=fmt(f)} calculate();
+</script>
+</body>
+ </html>
